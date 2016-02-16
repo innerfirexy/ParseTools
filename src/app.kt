@@ -5,6 +5,7 @@
 package parsetools
 
 import java.sql.*
+import edu.standford.nlp.simple.*
 
 
 // the fun that returns a db connection
@@ -35,14 +36,12 @@ fun getResults(conn: Connection, query: String) : List<result> {
     return results
 }
 
-// the fun that parses the rawWord in results
-
 
 // main
 fun main(args: Array<String>) {
-    val conn = getConn("bnc")
+    val conn = getConn("bnc", local = false)
 
-    val query = "SELECT xmlID, divIndex, globalID, rawWord FROM entropy_DEM100"
+    val query = "SELECT xmlID, divIndex, globalID, rawWord FROM entropy_DEM100 WHERE rawWord IS NOT NULL AND rawWord <> \'\'"
     val results = getResults(conn, query)
     println(results.size)
 }
